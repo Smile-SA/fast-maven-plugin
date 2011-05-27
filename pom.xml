@@ -8,6 +8,9 @@
     <packaging>maven-plugin</packaging>
     <name>maven-fast-plugin</name>
     <description>Fast ApplicationS Templating is a maven plugin Generate a set of HTML pages with reusable components found in modules folder.</description>
+    <scm>
+        <connection>scm:git:https://github.com/Smile-SA/maven-repository.git</connection>
+    </scm>
     <developers>
         <developer>
             <id>alexist</id>
@@ -70,7 +73,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
-                <version>2.7</version>                
+                <version>2.7</version>
                 <executions>
                     <execution>
                         <id>generated-helpmojo</id>
@@ -106,4 +109,14 @@
             </plugin>
         </plugins>
     </reporting>
+    <distributionManagement>
+        <repository>
+            <id>repo</id>
+            <url>https://github.com/Smile-SA/maven-repository/raw/master/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot-repo</id>
+            <url>https://github.com/Smile-SA/maven-repository/raw/master/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
