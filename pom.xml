@@ -114,7 +114,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.1</version>
                 <configuration>
-                    <arguments>-Prelease -DaltDeploymentRepository="${altDeploymentRepository}"</arguments>
+                    <arguments>-DaltDeploymentRepository="${altDeploymentRepository}"</arguments>
                 </configuration>
             </plugin>
         </plugins>
