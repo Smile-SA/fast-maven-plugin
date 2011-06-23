@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.fast.maven.plugin</groupId>
     <artifactId>maven-fast-plugin</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.3</version>
     <packaging>maven-plugin</packaging>
     <name>maven-fast-plugin</name>
     <description>Fast ApplicationS Templating is a maven plugin Generate a set of HTML pages with reusable components found in modules folder.</description>
