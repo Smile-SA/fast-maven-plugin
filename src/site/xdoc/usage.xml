@@ -2,7 +2,6 @@
 <document>
 	<properties>
 		<title>Usage</title>
-		<author email="a.thaveau@free.fr">Alexis Thaveau</author>
 	</properties>
 	<body>
 		<section name="Introduction">
@@ -25,10 +24,10 @@
 			<p>
 				The simplest way is to generate your project with the archetype :
 				<source><![CDATA[
-mvn archetype:generate 
-    -DarchetypeRepository=http://www.esigate.org/maven/repository 
-    -DarchetypeArtifactId=webassembletool-staticassembly-archetype
-    -DarchetypeGroupId=net.sourceforge.webassembletool.maven  -DarchetypeVersion=RELEASE
+mvn archetype:generate
+	-DarchetypeRepository=http://smile-sa.github.com/maven-repository/releases
+	-DarchetypeGroupId=org.fast.archetype
+	-DarchetypeArtifactId=fast-archetype
 ]]></source>
 			</p>
 		</section>
@@ -44,10 +43,14 @@ mvn archetype:generate
   <build>
     [...]
     <plugins>
-       <plugin>
-          <groupId>net.sourceforge.webassembletool.maven</groupId>
-          <artifactId>webassembletool-staticassembly-plugin</artifactId>
-       </plugin>
+		<plugin>
+			<groupId>org.fast.maven.plugin</groupId>
+			<artifactId>maven-fast-plugin</artifactId>
+			<version>${currentVersion}</version>
+			<configuration>
+				<charset>UTF-8</charset>
+			</configuration>
+		</plugin>
        [...]
 </project>
 ]]></source>
@@ -57,11 +60,11 @@ mvn archetype:generate
 				</p>
 			<source><![CDATA[
 <pluginRepositories>
-    <pluginRepository>
-        <id>esigate-repository</id>
-        <name>ESIGate repository</name>
-        <url>http://www.esigate.org/maven/repository</url>
-    </pluginRepository>
+	<pluginRepository>
+		<id>smile-github-repository</id>
+		<name>Smile Github repository</name>
+		<url>http://smile-sa.github.com/maven-repository/releases</url>
+	</pluginRepository>
 </pluginRepositories>
 ]]></source>
 
@@ -82,8 +85,8 @@ mvn archetype:generate
 	<p>To bind the plugin to the standard build lifecycle : </p>	
 	<source><![CDATA[
 <plugin>
-	<groupId>net.sourceforge.webassembletool.maven</groupId>
-	<artifactId>webassembletool-staticassembly-plugin</artifactId>
+	<groupId>org.fast.maven.plugin</groupId>
+	<artifactId>maven-fast-plugin</artifactId>
 	<version>${currentVersion}</version>
 	<executions>
 		<execution>
