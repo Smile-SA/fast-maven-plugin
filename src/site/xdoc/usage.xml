@@ -25,9 +25,10 @@
 				The simplest way is to generate your project with the archetype :
 				<source><![CDATA[
 mvn archetype:generate
-	-DarchetypeRepository=http://smile-sa.github.com/maven-repository/releases
+	-DarchetypeCatalog=http://smile-sa.github.com/maven-repository/releases/archetype-catalog.xml
 	-DarchetypeGroupId=org.fast.archetype
 	-DarchetypeArtifactId=fast-archetype
+	-DarchetypeVersion=RELEASE
 ]]></source>
 			</p>
 		</section>
