@@ -2,10 +2,9 @@
 <document>
 	<properties>
 		<title>Overview</title>
-		<author email="a.thaveau@free.fr">Alexis Thaveau</author>
 	</properties>
 	<body>
-		<section name="Maven staticassembly plugin">
+		<section name="Maven FAST plugin">
 			<p>
 				This plugin, based on ESIGate API, generate a set of HTML pages with reusable components.
 			</p>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Eclipse</title>
+	</properties>
+	<body>
+		<section name="Introduction">
+			<p>
+				To ease working with FAST, the best to do is to use Eclipse configured to work hand-in-hand with Maven.
+				To do so, we'll use an Eclipse plugin called <a href="http://eclipse.org/m2e">m2Eclipse</a>.
+			</p>
+		</section>		
+		<section name="Install : Eclipse">
+			<p>
+				FAST through m2eclipse has been tested with those configurations :
+			</p>
+			<ul>
+				<li>
+					Helios (Eclipse 3.6)
+					<ul>
+						<li>classic : eclipse-SDK-3.6.2-linux-gtk-x86_64</li>
+						<li>java : eclipse-java-helios-SR2-linux-gtk-x86_64</li>
+						<li>jee : eclipse-jee-helios-SR2-linux-gtk-x86_64</li>
+						<li>php : eclipse-php-helios-SR2-linux-gtk-x86_64</li>
+					</ul>
+				</li>
+				<li>
+					Indigo (Eclipse 3.7)
+					<ul>
+						<li>classic : eclipse-SDK-3.7.1-linux-gtk-x86_64</li>
+						<li>j2e : eclipse-jee-indigo-linux-gtk</li>
+						<li>java : eclipse-java-indigo-SR1-linux-gtk-x86_64 - already contain m2Eclipse</li>
+					</ul>
+					There is no indigo bundle for PHP development =/
+				</li>
+			</ul>
+			<p>
+				You can find those bundles on <a href="http://www.eclipse.org/downloads">Eclipse official website</a>.
+			</p>
+		</section>
+		<section name="Install : m2Eclipse">
+			<p>
+				You can find m2eclipse on its official website : http://eclipse.org/m2e.
+				The easier to use it is by defining a new update site into eclipse :
+			</p>
+			<ul>
+				<li>Inside Eclispe : Help &gt; Install new software</li>
+				<li>Use this "update site" : http://download.eclipse.org/technology/m2e/releases</li>
+				<li>Check "m2e - Maven integration for Eclipse" then click "Next".</li>
+				<li>Eclipse should be "Calculating requirements and dependencies" for a while.</li>
+				<li>Eclipse wil show what you're about to install, click "Next", accept the agreement and click "Finish"</li>
+				<li>Wait for the install to end ...</li>
+			</ul>
+		</section>
+		<section name="Eclipse : 'Package explorer' view">
+			<p>
+				Even for PHP bundle, the 'Package explorer' view is the best to work with Maven project as it easier to access resources.
+				But, it is not mandatory =)
+			</p>
+		</section>
+		<section name="Eclipse : Importing your project">
+			<subsection name="Import">
+				<ul>
+					<li>Go to : File &gt; Import &gt; Existing maven projects</li>
+					<li>Browse to your project, where you can find the pom.xml file.</li>
+					<li>If you go a screen "Setup maven plugin connectors", click "Resolve All Later" and "Finish".</li>
+					<li>Validate the alert.</li>
+				</ul>
+				<p>
+					Project should be in "package explorer".
+				</p>
+			</subsection>
+			<subsection name="Fix maven issue">
+				If you got an error on opm.xml (red icon on it), there is a <a href="http://wiki.eclipse.org/M2E_plugin_execution_not_covered">known issue with your m2eclipse version</a> : 
+				<ul>
+					<li>Open pom.xml and go to the line with the error (execution tag).</li>
+					<li>Do a "quick fix" (ctrl+1) ; choose "Permanently mark goal assembly in pom.xml as ignored" ; validate</li>
+				</ul>
+				<p>
+					You should find this :
+				</p>
+				<source><![CDATA[
+<pluginManagement>
+	<plugins>
+		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+		<plugin>
+			<groupId>org.eclipse.m2e</groupId>
+			<artifactId>lifecycle-mapping</artifactId>
+			<version>1.0.0</version>
+			<configuration>
+				<lifecycleMappingMetadata>
+					<pluginExecutions>
+						<pluginExecution>
+							<pluginExecutionFilter>
+								<groupId>
+									org.fast.maven.plugin
+								</groupId>
+								<artifactId>
+									maven-fast-plugin
+								</artifactId>
+								<versionRange>
+									[2.0,)
+								</versionRange>
+								<goals>
+									<goal>assembly</goal>
+								</goals>
+							</pluginExecutionFilter>
+							<action>
+								<ignore></ignore>
+							</action>
+						</pluginExecution>
+					</pluginExecutions>
+				</lifecycleMappingMetadata>
+			</configuration>
+		</plugin>
+	</plugins>
+</pluginManagement>
+]]></source>
+				<p>
+					Check the 'action' tag, containing the empty 'ignore' tag and replace it with an empty 'execute' tag. 
+					You should obtain this :
+				</p>
+				<source><![CDATA[
+<pluginManagement>
+	<plugins>
+		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+		<plugin>
+			<groupId>org.eclipse.m2e</groupId>
+			<artifactId>lifecycle-mapping</artifactId>
+			<version>1.0.0</version>
+			<configuration>
+				<lifecycleMappingMetadata>
+					<pluginExecutions>
+						<pluginExecution>
+							<pluginExecutionFilter>
+								<groupId>
+									org.fast.maven.plugin
+								</groupId>
+								<artifactId>
+									maven-fast-plugin
+								</artifactId>
+								<versionRange>
+									[2.0,)
+								</versionRange>
+								<goals>
+									<goal>assembly</goal>
+								</goals>
+							</pluginExecutionFilter>
+							<action>
+								<execute />
+							</action>
+						</pluginExecution>
+					</pluginExecutions>
+				</lifecycleMappingMetadata>
+			</configuration>
+		</plugin>
+	</plugins>
+</pluginManagement>
+]]></source>
+				<p>
+					When you're done, in the package explorer, right click on project root and go to Maven &gt; Update project configuration then validate.
+					You're good to go with FAST ... at last !
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>
