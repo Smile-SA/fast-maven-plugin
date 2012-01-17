@@ -18,14 +18,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
-import net.webassembletool.HttpErrorPage;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
-import org.fast.maven.plugin.AssemblyMojo;
+import org.esigate.HttpErrorPage;
 
 /**
  * AssemblyMojo Integration Test

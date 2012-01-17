@@ -12,17 +12,17 @@
  * limitations under the License.
  *
  */
-package net.webassembletool;
+package org.fast.maven.plugin;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import net.webassembletool.Driver;
-import net.webassembletool.DriverFactory;
-import net.webassembletool.HttpErrorPage;
-import net.webassembletool.ResourceContext;
-import net.webassembletool.output.StringOutput;
+import org.esigate.Driver;
+import org.esigate.DriverFactory;
+import org.esigate.HttpErrorPage;
+import org.esigate.ResourceContext;
+import org.esigate.output.StringOutput;
 
 /**
  * StaticDriver is initialized with API

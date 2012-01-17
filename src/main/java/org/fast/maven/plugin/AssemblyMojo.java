@@ -20,11 +20,6 @@ import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Properties;
 
-import net.webassembletool.Driver;
-import net.webassembletool.HttpErrorPage;
-import net.webassembletool.ResourceContext;
-import net.webassembletool.StaticDriver;
-import net.webassembletool.aggregator.AggregateRenderer;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
@@ -34,6 +29,10 @@ import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.esigate.Driver;
+import org.esigate.HttpErrorPage;
+import org.esigate.ResourceContext;
+import org.esigate.aggregator.AggregateRenderer;
 
 /**
  * Generate a set of HTML pages with reusable components found in modules folder
@@ -189,7 +188,7 @@ public class AssemblyMojo extends AbstractMojo {
 		Collection files = FileUtils.listFiles(pagesDirectory,
 				PAGES_TO_GENERATE_FILTER, FileFilterUtils.trueFileFilter());
 
-		AggregateRenderer renderer = new AggregateRenderer(null, null);
+		AggregateRenderer renderer = new AggregateRenderer();
 
 		for (Object ofilename : files) {
 			File filePage = (File) ofilename;
