@@ -15,7 +15,7 @@
 	[...]
 	<plugin>
 		<groupId>org.fast.maven.plugin</groupId>
-		<artifactId>maven-fast-plugin</artifactId>
+		<artifactId>fast-maven-plugin</artifactId>
 		<version>${currentVersion}</version>
 		<configuration>
 			<charset>UTF-8</charset>
@@ -51,7 +51,7 @@
 			<source><![CDATA[
 <plugin>
 	<groupId>org.fast.maven.plugin</groupId>
-	<artifactId>maven-fast-plugin</artifactId>
+	<artifactId>fast-maven-plugin</artifactId>
 	<version>${currentVersion}</version>
 	<executions>
 		<execution>

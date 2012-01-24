@@ -35,7 +35,7 @@
 			</plugin>
 			<plugin>
 				<groupId>org.fast</groupId>
-                                <artifactId>maven-fast-plugin</artifactId>
+				<artifactId>fast-maven-plugin</artifactId>
 				<configuration></configuration>
 			</plugin>
 		</plugins>

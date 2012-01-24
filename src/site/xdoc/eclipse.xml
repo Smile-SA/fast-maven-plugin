@@ -96,7 +96,7 @@
 									org.fast.maven.plugin
 								</groupId>
 								<artifactId>
-									maven-fast-plugin
+									fast-maven-plugin
 								</artifactId>
 								<versionRange>
 									[2.0,)
@@ -137,7 +137,7 @@
 									org.fast.maven.plugin
 								</groupId>
 								<artifactId>
-									maven-fast-plugin
+									fast-maven-plugin
 								</artifactId>
 								<versionRange>
 									[2.0,)

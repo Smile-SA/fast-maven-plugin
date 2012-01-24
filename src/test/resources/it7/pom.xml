@@ -6,7 +6,7 @@
 	<version>0.1</version>
 	<name>Maven Plugin IT 7</name>
 	<description>Integration Test 7 for the Maven Plugin</description>
-	<build>		
+	<build>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -35,7 +35,7 @@
 			</plugin>
 			<plugin>
 				<groupId>org.fast</groupId>
-                                <artifactId>maven-fast-plugin</artifactId>
+				<artifactId>fast-maven-plugin</artifactId>
 				<configuration></configuration>
 			</plugin>
 		</plugins>
