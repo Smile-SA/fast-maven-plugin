@@ -9,6 +9,11 @@
 			<item name="Advanced usage" href="advanced-usage.html" />
 			<item name="Eclipse" href="eclipse.html" />
 		</menu>
+		<menu name="Extra">
+			<item name="Minify" href="extra-minify.html" />
+			<item name="JSLint" href="extra-jslint.html" />
+			<item name="LESS" href="extra-less.html" />
+		</menu>
 		<menu ref="reports" />
 	</body>
 </project>

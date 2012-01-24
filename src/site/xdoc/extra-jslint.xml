@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Extra</title>
+	</properties>
+	<body>
+		<section name="JSLint">
+			<p>
+				Writing good javascript code is good, writing better javascript code is even better =).
+				The idea behind jsLint plugin is to validate your javascript code to fix some usual mistakes.
+			</p>
+			<p>
+				To activate minification with FAST, all you have to do is to add a plugin :
+			</p>
+			<source><![CDATA[
+<build>
+	<plugins>
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>jslint-maven-plugin</artifactId>
+			<version>1.0.0</version>
+			<executions>
+				<execution>
+					<goals>
+						<goal>jslint</goal>
+					</goals>
+					<phase>process-resources</phase>
+					<configuration>
+						<sourceJsFolder>${basedir}/src/main/resources/pages/v1/js</sourceJsFolder>
+						<includes>
+							<include>init-utilities.js</include>
+							<include>jquery.bistatelink.js</include>
+							<include>init.js</include>
+							<include>localization.js</include>
+							<include>service.js</include>
+							<include>init-mockjax.js</include>
+						</includes>
+					</configuration>
+				</execution>
+			</executions>
+			<configuration>
+				<allowOneVarStatementPerFunction>false</allowOneVarStatementPerFunction>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+]]></source>
+			<p>
+				The <em>configuration</em> section can be modified to fit your needs, check <a href="http://mojo.codehaus.org/jslint-maven-plugin/jslint-mojo.html">the available options</a>.
+			</p>
+			<p>
+				The <em>includes</em> section contains a list of files you want to validate.
+			</p>
+			<p>
+				For more information, check <a href="http://mojo.codehaus.org/jslint-maven-plugin/">the jslint-maven-plugin official website</a>.
+			</p>
+		</section>
+	</body>
+</document>
