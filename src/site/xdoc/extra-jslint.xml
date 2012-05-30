@@ -16,17 +16,20 @@
 <build>
 	<plugins>
 		<plugin>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>jslint-maven-plugin</artifactId>
-			<version>1.0.0</version>
+			<groupId>com.googlecode.jslint4java</groupId>
+			<artifactId>jslint4java-maven-plugin</artifactId>
+			<version>2.0.2</version>
 			<executions>
 				<execution>
 					<goals>
-						<goal>jslint</goal>
+						<goal>lint</goal>
 					</goals>
 					<phase>process-resources</phase>
 					<configuration>
-						<sourceJsFolder>${basedir}/src/main/resources/pages/v1/js</sourceJsFolder>
+						<failOnError>true</failOnError>
+						<sourceFolders>
+							<sourceFolder>js</sourceFolder>
+						</sourceFolders>
 						<includes>
 							<include>init-utilities.js</include>
 							<include>jquery.bistatelink.js</include>
@@ -39,20 +42,26 @@
 				</execution>
 			</executions>
 			<configuration>
-				<allowOneVarStatementPerFunction>false</allowOneVarStatementPerFunction>
+				<options>
+					<sloppy>true</sloppy>
+					<predef>console,jQuery,localization,confirm,serviceUrl</predef>
+					<browser>true</browser>
+					<vars>true</vars>
+					<plusplus>true</plusplus>
+				</options>
 			</configuration>
 		</plugin>
 	</plugins>
 </build>
 ]]></source>
 			<p>
-				The <em>configuration</em> section can be modified to fit your needs, check <a href="http://mojo.codehaus.org/jslint-maven-plugin/jslint-mojo.html">the available options</a>.
+				The <em>configuration</em> section can be modified to fit your needs.
 			</p>
 			<p>
 				The <em>includes</em> section contains a list of files you want to validate.
 			</p>
 			<p>
-				For more information, check <a href="http://mojo.codehaus.org/jslint-maven-plugin/">the jslint-maven-plugin official website</a>.
+				For more information, check <a href="http://jslint4java.googlecode.com/svn/docs/2.0.0/maven.html">the jslint4java maven plugin official website</a>.
 			</p>
 		</section>
 	</body>
