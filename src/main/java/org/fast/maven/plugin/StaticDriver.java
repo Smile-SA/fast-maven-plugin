@@ -14,6 +14,7 @@
  */
 package org.fast.maven.plugin;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -41,8 +42,9 @@ public class StaticDriver extends Driver {
 	 * Add Resource with default charset ISO-8859-1
 	 * @param relUrl
 	 * @param content
+	 * @throws IOException 
 	 */
-	public void addResource(String relUrl, String content) {
+	public void addResource(String relUrl, String content) throws IOException {
 		this.addResource(relUrl, content,"ISO-8859-1");
 		
 	}
@@ -52,8 +54,9 @@ public class StaticDriver extends Driver {
 	 * @param relUrl
 	 * @param content
 	 * @param charset
+	 * @throws IOException 
 	 */
-	public void addResource(String relUrl, String content, String charset) {
+	public void addResource(String relUrl, String content, String charset) throws IOException {
 		StringOutput stringOutput = new StringOutput();
 		stringOutput.setStatusCode(200);
 		stringOutput.setStatusMessage("OK");
