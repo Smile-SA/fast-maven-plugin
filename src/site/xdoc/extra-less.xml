@@ -6,8 +6,26 @@
 	<body>
 		<section name="LESS">
 			<p>
-				TODO =/
+				CSS preprocessors are useful tools to build coherent CSS files
+				<a href="http://lesscss.org">LESS</a> is one of them.
 			</p>
+			<p>
+				To use it with Maven, we'll use this <a href="https://github.com/marceloverdijk/lesscss-maven-plugin">LESS maven plugin</a>
+			</p>
+			<source><![CDATA[
+<build>
+	<plugins>
+		<plugin>
+			<groupId>org.lesscss</groupId>
+			<artifactId>lesscss-maven-plugin</artifactId>
+			<configuration>
+				<sourceDirectory>${project.basedir}/src/main/resources/less</sourceDirectory>
+				<outputDirectory>${project.build.directory}/generated-html/v1/css</outputDirectory>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+]]></source>
 		</section>
 	</body>
 </document>
