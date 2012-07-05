@@ -13,6 +13,7 @@
 			<item name="Minify" href="extra-minify.html" />
 			<item name="JSLint" href="extra-jslint.html" />
 			<item name="LESS" href="extra-less.html" />
+			<item name="SASS" href="extra-sass.html" />
 		</menu>
 		<menu ref="reports" />
 	</body>
