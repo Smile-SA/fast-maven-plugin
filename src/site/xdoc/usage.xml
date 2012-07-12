@@ -8,13 +8,25 @@
 			<p>
 				The simplest way is to generate your project with the archetype :
 				<source><![CDATA[
-mvn archetype:generate
-	-DarchetypeCatalog=http://smile-sa.github.com/maven-repository/releases/archetype-catalog.xml
-	-DarchetypeGroupId=org.fast.archetype
-	-DarchetypeArtifactId=fast-archetype-simple
+mvn archetype:generate \
+	-DarchetypeCatalog=http://smile-sa.github.com/maven-repository/releases/archetype-catalog.xml \
+	-DarchetypeGroupId=org.fast.archetype \
 	-DarchetypeVersion=RELEASE
 ]]></source>
 			</p>
+			<p>
+				Available archetypes :
+			</p>
+			<dl>
+				<dt>fast-archetype-simple</dt>
+				<dd>The simpliest project you can get, useful to start understanding fast </dd>
+				<dt>fast-archetype-yui3</dt>
+				<dd>Demo project with embedded YUI3 CSS and some example templates</dd>
+				<dt>fast-archetype-960gs</dt>
+				<dd>Demo project with embedded 960gs CSS and some example templates</dd>
+				<dt>fast-archetype-liferay-6.1.0-ce</dt>
+				<dd>Lifgeray bootstrap, very useful to start a static work on a Lifery project</dd>
+			</dl>
 		</section>
 		<section name="How to start ?">
 			<p>
@@ -44,30 +56,6 @@ mvn package
 ]]></source>
 				This will generate a zip-archive into target folder.
 				Then you can send this archive to anyone wanting to see results of your work =)
-			</p>
-		</section>
-		<section name="Generate YUI3 project with archetype">
-			<p>
-				If you want to use Yahoo UI 3 as CSS framework, you can use this specific archetype :
-				<source><![CDATA[
-mvn archetype:generate
-	-DarchetypeCatalog=http://smile-sa.github.com/maven-repository/releases/archetype-catalog.xml
-	-DarchetypeGroupId=org.fast.archetype
-	-DarchetypeArtifactId=fast-archetype-yui3
-	-DarchetypeVersion=RELEASE
-]]></source>
-			</p>
-		</section>
-		<section name="Generate 960gs project with archetype">
-			<p>
-				If you want to use 960gs as CSS framework, you can use this specific archetype :
-				<source><![CDATA[
-mvn archetype:generate
-	-DarchetypeCatalog=http://smile-sa.github.com/maven-repository/releases/archetype-catalog.xml
-	-DarchetypeGroupId=org.fast.archetype
-	-DarchetypeArtifactId=fast-archetype-960gs
-	-DarchetypeVersion=RELEASE
-]]></source>
 			</p>
 		</section>
 	</body>

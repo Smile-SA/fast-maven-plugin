@@ -14,6 +14,7 @@
 			<item name="JSLint" href="extra-jslint.html" />
 			<item name="LESS" href="extra-less.html" />
 			<item name="SASS" href="extra-sass.html" />
+			<item name="Jetty" href="extra-jetty.xml" />
 		</menu>
 		<menu ref="reports" />
 	</body>

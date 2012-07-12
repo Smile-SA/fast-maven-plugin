@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Extra</title>
+	</properties>
+	<body>
+		<section name="Jetty">
+			<p>
+				As some browser doesn't like you to play with local file, you may want to test your work through a web server.
+				For example, if you use tools like the excelent <a href="http://leaverou.github.com/prefixfree">-prefix-free</a>, you may find it useful =)
+			</p>
+			<p>
+				To do so, we don't need to install anything, we simply will use command line interface (CLI) :
+				<source><![CDATA[
+cd $PROJECT_HOME
+mvn jetty:run
+]]></source>
+				Then, you can access <a href="http://localhost:8008">http://localhost:8008</a> in your browser.
+			</p>
+		</section>
+	</body>
+</document>
