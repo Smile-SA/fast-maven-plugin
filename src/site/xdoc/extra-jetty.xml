@@ -15,7 +15,7 @@
 cd $PROJECT_HOME
 mvn jetty:run
 ]]></source>
-				Then, you can access <a href="http://localhost:8008">http://localhost:8008</a> in your browser.
+				Then, you can access <a href="http://localhost:8080">http://localhost:8080</a> in your browser.
 			</p>
 		</section>
 	</body>
