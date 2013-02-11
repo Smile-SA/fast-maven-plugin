@@ -25,7 +25,11 @@ mvn archetype:generate \
 				<dt>fast-archetype-960gs</dt>
 				<dd>Demo project with embedded 960gs CSS and some example templates</dd>
 				<dt>fast-archetype-liferay-6.1.0-ce</dt>
-				<dd>Lifgeray bootstrap, very useful to start a static work on a Lifery project</dd>
+				<dd>Liferay bootstrap, very useful to start a static work on a Lifery project</dd>
+				<dt>fast-archetype-sass</dt>
+				<dd>Demo project with SASS file generation</dd>
+				<dt>fast-archetype-twitterbootstrap</dt>
+				<dd>Project with Twitter Bootstrap embedded in its core</dd>
 			</dl>
 		</section>
 		<section name="How to start ?">
