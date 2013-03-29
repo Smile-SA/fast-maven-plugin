@@ -31,13 +31,18 @@
 			<name>Romain Gonord</name>
 			<email>romain.gonord.opensource@neteyes.org</email>
 		</developer>
+		<developer>
+			<id>nricheton</id>
+			<name>Nicolas Richeton</name>
+			<email>nicolas.richeton@gmail.com</email>
+		</developer>
 	</developers>
 	<inceptionYear>2011</inceptionYear>
 	<dependencies>
 		<dependency>
 			<groupId>org.esigate</groupId>
 			<artifactId>esigate-core</artifactId>
-			<version>3.4</version>
+			<version>4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
