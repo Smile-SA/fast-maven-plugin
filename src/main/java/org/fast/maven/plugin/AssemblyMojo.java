@@ -17,22 +17,27 @@ package org.fast.maven.plugin;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Properties;
-
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.apache.http.ProtocolVersion;
+import org.apache.http.message.BasicHttpEntityEnclosingRequest;
+import org.apache.http.message.BasicRequestLine;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.esigate.Driver;
 import org.esigate.HttpErrorPage;
-import org.esigate.ResourceContext;
+import org.esigate.Renderer;
 import org.esigate.aggregator.AggregateRenderer;
+import org.esigate.esi.EsiRenderer;
 
 /**
  * Generate a set of HTML pages with reusable components found in modules folder
@@ -42,6 +47,7 @@ import org.esigate.aggregator.AggregateRenderer;
  * @execute phase="process-resources"
  * 
  * @author Alexis Thaveau
+ * @author Nicolas Richeton
  */
 public class AssemblyMojo extends AbstractMojo {
 
@@ -99,9 +105,9 @@ public class AssemblyMojo extends AbstractMojo {
 
 		Properties prop = new Properties();
 
-		prop.put("modules.localBase", outputDirectory.getAbsolutePath()
+		prop.put("remoteUrlBase", outputDirectory.getAbsolutePath()
 				+ "/modules");
-		prop.put("modules.uriEncoding", charset);
+		prop.put("uriEncoding", charset);
 
 		StaticDriver driver = new StaticDriver("modules", prop);
 
@@ -188,19 +194,25 @@ public class AssemblyMojo extends AbstractMojo {
 		Collection files = FileUtils.listFiles(pagesDirectory,
 				PAGES_TO_GENERATE_FILTER, FileFilterUtils.trueFileFilter());
 
-		AggregateRenderer renderer = new AggregateRenderer();
+		List<Renderer> renderers = new ArrayList<Renderer>();
+		renderers.add( new AggregateRenderer() );
+		renderers.add( new EsiRenderer() );
 
 		for (Object ofilename : files) {
 			File filePage = (File) ofilename;
 
 			String page = getRelativePath(pagesDirectory, filePage);
 			String content = FileUtils.readFileToString(filePage, charset);
-			ResourceContext resourceContext = new ResourceContext(driver, page,
-					null, null, null);
+			
+			BasicHttpEntityEnclosingRequest request = new BasicHttpEntityEnclosingRequest(new BasicRequestLine("GET", page, new ProtocolVersion("HTTP", 1, 1)));
 
-			StringWriter stringWriter = new StringWriter();
-			renderer.render(resourceContext, content, stringWriter);
-			String result = stringWriter.toString().replaceAll("<!--#\\$",
+			for( Renderer renderer : renderers){
+				StringWriter stringWriter = new StringWriter();
+				renderer.render(request, content, stringWriter);
+				content = stringWriter.toString();
+			}
+			
+			String result = content.replaceAll("<!--#\\$",
 					"<!--\\$");
 
 			File file = new File(this.outputDirectory + "/" + page);
