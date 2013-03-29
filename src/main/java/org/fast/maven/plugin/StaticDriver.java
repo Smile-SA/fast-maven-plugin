@@ -19,19 +19,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.http.HttpEntityEnclosingRequest;
+import org.apache.http.HttpRequest;
 import org.esigate.Driver;
 import org.esigate.DriverFactory;
 import org.esigate.HttpErrorPage;
-import org.esigate.ResourceContext;
-import org.esigate.output.StringOutput;
 
 /**
  * StaticDriver is initialized with API
  * 
  * @author Alexis Thaveau
+ * @author Nicolas Richeton
  */
 public class StaticDriver extends Driver {
-	private final Map<String, StringOutput> resources = new HashMap<String, StringOutput>();
+	private final Map<String, String> resources = new HashMap<String, String>();
 
 	public StaticDriver(String name, Properties props) {
 		super(name, props);
@@ -46,7 +47,6 @@ public class StaticDriver extends Driver {
 	 */
 	public void addResource(String relUrl, String content) throws IOException {
 		this.addResource(relUrl, content,"ISO-8859-1");
-		
 	}
 	
 	/**
@@ -57,24 +57,21 @@ public class StaticDriver extends Driver {
 	 * @throws IOException 
 	 */
 	public void addResource(String relUrl, String content, String charset) throws IOException {
-		StringOutput stringOutput = new StringOutput();
-		stringOutput.setStatusCode(200);
-		stringOutput.setStatusMessage("OK");
-		stringOutput.setCharsetName(charset);
-		stringOutput.open();
-		stringOutput.write(content);
-		resources.put(relUrl, stringOutput);
+		resources.put(relUrl, content);
 	}
 
 	@Override
-	protected StringOutput getResourceAsString(ResourceContext target)
+	protected String getResourceAsString(String relUrl, HttpEntityEnclosingRequest httpRequest)
 			throws HttpErrorPage {
-		StringOutput result = resources.get(target.getRelUrl());
-		if (result == null)
-			throw new HttpErrorPage(404, "Not found" + "The page: "
-					+ target.getRelUrl() + " does not exist", "The page: "
-					+ target.getRelUrl() + " does not exist");
-		return result;
+		String result = resources.get(relUrl);
+		if( result == null )
+			throw new HttpErrorPage(500, "Internal server error", "Template not found");
+		
+		return  result; 
 	}
 
+	
+	public void initHttpRequestParams(HttpRequest request, Map<String, String> parameters) throws HttpErrorPage {
+		// No request will be sent, so no need to init.
+	}
 }
