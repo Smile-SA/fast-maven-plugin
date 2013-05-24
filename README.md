@@ -1,4 +1,4 @@
-# Maven FAST plugin
+# [Maven FAST plugin](http://smile-sa.github.io/fast-maven-plugin)
 
 This plugin, based on [esigate API](http://www.esigate.org), generate a set of HTML pages with reusable components.
 
