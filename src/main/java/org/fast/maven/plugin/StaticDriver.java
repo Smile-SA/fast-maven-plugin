@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.http.HttpEntityEnclosingRequest;
-import org.apache.http.HttpRequest;
+import org.apache.http.HttpStatus;
 import org.esigate.Driver;
 import org.esigate.DriverFactory;
 import org.esigate.HttpErrorPage;
@@ -34,44 +34,53 @@ import org.esigate.HttpErrorPage;
 public class StaticDriver extends Driver {
 	private final Map<String, String> resources = new HashMap<String, String>();
 
+	/**
+	 * @param name
+	 *            base dir to find modules
+	 * @param props
+	 *            configuration properties
+	 */
 	public StaticDriver(String name, Properties props) {
 		super(name, props);
-		DriverFactory.put(name, this);		
+		DriverFactory.put(name, this);
 	}
 
 	/**
-	 * Add Resource with default charset ISO-8859-1
-	 * @param relUrl
-	 * @param content
-	 * @throws IOException 
-	 */
-	public void addResource(String relUrl, String content) throws IOException {
-		this.addResource(relUrl, content,"ISO-8859-1");
-	}
-	
-	/**
 	 * Add Resource
+	 * 
 	 * @param relUrl
 	 * @param content
-	 * @param charset
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public void addResource(String relUrl, String content, String charset) throws IOException {
+	private void addResource(String relUrl, String content) throws IOException {
 		resources.put(relUrl, content);
 	}
 
-	@Override
-	protected String getResourceAsString(String relUrl, HttpEntityEnclosingRequest httpRequest)
-			throws HttpErrorPage {
-		String result = resources.get(relUrl);
-		if( result == null )
-			throw new HttpErrorPage(500, "Internal server error", "Template not found");
-		
-		return  result; 
+	/**
+	 * Add Resource
+	 * 
+	 * The charset is not used ; it only goes to addResource(String relUrl,
+	 * String content).
+	 * 
+	 * @param relUrl
+	 *            module relative path
+	 * @param content
+	 *            module content
+	 * @param charset
+	 *            module charset (not used)
+	 * @throws IOException
+	 *             thrown if module is not found
+	 */
+	public void addResource(String relUrl, String content, String charset) throws IOException {
+		addResource(relUrl, content);
 	}
 
-	
-	public void initHttpRequestParams(HttpRequest request, Map<String, String> parameters) throws HttpErrorPage {
-		// No request will be sent, so no need to init.
+	@Override
+	protected String getResourceAsString(String relUrl, HttpEntityEnclosingRequest httpRequest) throws HttpErrorPage {
+		String result = resources.get(relUrl);
+		if (result == null) {
+			throw new HttpErrorPage(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal server error", "Template not found");
+		}
+		return result;
 	}
 }

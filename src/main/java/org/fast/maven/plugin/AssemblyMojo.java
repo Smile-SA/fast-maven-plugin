@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -32,7 +32,6 @@ import org.apache.http.message.BasicHttpEntityEnclosingRequest;
 import org.apache.http.message.BasicRequestLine;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.esigate.Driver;
 import org.esigate.HttpErrorPage;
 import org.esigate.Renderer;
@@ -44,53 +43,44 @@ import org.esigate.esi.EsiRenderer;
  * 
  * @goal assembly
  * @phase generate-resources
- * @execute phase="process-resources"
  * 
  * @author Alexis Thaveau
  * @author Nicolas Richeton
  */
 public class AssemblyMojo extends AbstractMojo {
-
 	/**
 	 * Filter page to generate
 	 */
-	private static IOFileFilter PAGES_TO_GENERATE_FILTER = new SuffixFileFilter(
-			".html");
-
+	private static final IOFileFilter PAGES_TO_GENERATE_FILTER = new SuffixFileFilter(".html");
 	/**
 	 * Filter components to configure
 	 */
-	private static IOFileFilter COMPONENTS_TO_CONFIGURE = new SuffixFileFilter(
-			".html");
-
+	private static final IOFileFilter COMPONENTS_TO_CONFIGURE = new SuffixFileFilter(".html");
 	/**
 	 * The directory containing pages to generate.
 	 * 
-	 * @parameter expression="${project.build.outputDirectory}/pages"
+	 * @parameter property="project.build.outputDirectory/pages"
 	 * @required
 	 */
 	private File pagesDirectory;
-
 	/**
 	 * The directory containing template and block.
 	 * 
-	 * @parameter expression="${project.build.outputDirectory}/modules"
+	 * @parameter property="project.build.outputDirectory/modules"
 	 * @required
 	 */
 	private File modulesDirectory;
-
 	/**
 	 * The output directory for assembly result.
 	 * 
-	 * @parameter expression="${project.build.directory}/generated-html"
+	 * @parameter property="project.build.directory/generated-html"
 	 * @required
 	 */
 	private File outputDirectory;
-
 	/**
 	 * Pages and modules charset to use.
 	 * 
-	 * @parameter expression="${charset}" default-value="UTF-8"
+	 * @parameter property="charset" default-value="UTF-8"
 	 */
 	private String charset;
 
@@ -99,18 +89,14 @@ public class AssemblyMojo extends AbstractMojo {
 	}
 
 	/**
-	 * 
+	 * @throws MojoExecutionException
+	 *             thrown if modules are not found
 	 */
 	public void execute() throws MojoExecutionException {
-
 		Properties prop = new Properties();
-
-		prop.put("remoteUrlBase", outputDirectory.getAbsolutePath()
-				+ "/modules");
+		prop.put("remoteUrlBase", outputDirectory.getAbsolutePath() + "/modules");
 		prop.put("uriEncoding", charset);
-
 		StaticDriver driver = new StaticDriver("modules", prop);
-
 		try {
 			checkStructure();
 			init(driver);
@@ -125,18 +111,13 @@ public class AssemblyMojo extends AbstractMojo {
 
 	/**
 	 * Check directory structure
-	 * 
-	 * @throws MojoFailureException
 	 */
 	private void checkStructure() throws MojoExecutionException {
 		if (!this.modulesDirectory.exists()) {
-			throw new MojoExecutionException("Directory modules not found ["
-					+ modulesDirectory.getAbsolutePath() + "]");
+			throw new MojoExecutionException("Directory modules not found [" + modulesDirectory.getAbsolutePath() + "]");
 		} else if (!this.pagesDirectory.exists()) {
-			throw new MojoExecutionException("Directory pages not found ["
-					+ pagesDirectory.getAbsolutePath() + "]");
+			throw new MojoExecutionException("Directory pages not found [" + pagesDirectory.getAbsolutePath() + "]");
 		}
-
 	}
 
 	/**
@@ -146,20 +127,15 @@ public class AssemblyMojo extends AbstractMojo {
 	 * @throws IOException
 	 */
 	private void init(StaticDriver driver) throws IOException {
-		getLog().info(
-				"Initialize driver with resources in folder "
-						+ modulesDirectory.getPath());
-
+		getLog().info("Initialize driver with resources in folder " + modulesDirectory.getPath());
 		@SuppressWarnings("rawtypes")
-		Collection files = FileUtils.listFiles(this.modulesDirectory,
-				COMPONENTS_TO_CONFIGURE, FileFilterUtils.trueFileFilter());
+		Collection files = FileUtils.listFiles(this.modulesDirectory, COMPONENTS_TO_CONFIGURE, FileFilterUtils.trueFileFilter());
 		for (Object file : files) {
 			File source = (File) file;
 			String fileName = getRelativePath(modulesDirectory, source);
 			String content = FileUtils.readFileToString(source, charset);
 			driver.addResource(fileName, content, charset);
 			getLog().info("Add resource " + fileName + " charset=" + charset);
-
 		}
 	}
 
@@ -167,17 +143,10 @@ public class AssemblyMojo extends AbstractMojo {
 	 * Copie les resources du repertoire static dans generated-html
 	 * 
 	 * @throws MojoExecutionException
-	 * @throws MojoFailureException
 	 */
 	private void copyStaticResources() throws IOException {
-
-		getLog().info(
-				"Copy static resources from " + pagesDirectory.getPath()
-						+ " to " + outputDirectory.getPath());
-
-		FileUtils.copyDirectory(pagesDirectory, outputDirectory,
-				new NotFileFilter(COMPONENTS_TO_CONFIGURE), true);
-
+		getLog().info("Copy static resources from " + pagesDirectory.getPath() + " to " + outputDirectory.getPath());
+		FileUtils.copyDirectory(pagesDirectory, outputDirectory, new NotFileFilter(COMPONENTS_TO_CONFIGURE), true);
 	}
 
 	/**
@@ -191,35 +160,24 @@ public class AssemblyMojo extends AbstractMojo {
 		getLog().info("Assemble pages");
 		// Find all html page to render
 		@SuppressWarnings("rawtypes")
-		Collection files = FileUtils.listFiles(pagesDirectory,
-				PAGES_TO_GENERATE_FILTER, FileFilterUtils.trueFileFilter());
-
+		Collection files = FileUtils.listFiles(pagesDirectory, PAGES_TO_GENERATE_FILTER, FileFilterUtils.trueFileFilter());
 		List<Renderer> renderers = new ArrayList<Renderer>();
-		renderers.add( new AggregateRenderer() );
-		renderers.add( new EsiRenderer() );
-
+		renderers.add(new AggregateRenderer());
+		renderers.add(new EsiRenderer());
 		for (Object ofilename : files) {
 			File filePage = (File) ofilename;
-
 			String page = getRelativePath(pagesDirectory, filePage);
 			String content = FileUtils.readFileToString(filePage, charset);
-			
 			BasicHttpEntityEnclosingRequest request = new BasicHttpEntityEnclosingRequest(new BasicRequestLine("GET", page, new ProtocolVersion("HTTP", 1, 1)));
-
-			for( Renderer renderer : renderers){
+			for (Renderer renderer : renderers) {
 				StringWriter stringWriter = new StringWriter();
 				renderer.render(request, content, stringWriter);
 				content = stringWriter.toString();
 			}
-			
-			String result = content.replaceAll("<!--#\\$",
-					"<!--\\$");
-
+			String result = content.replaceAll("<!--#\\$", "<!--\\$");
 			File file = new File(this.outputDirectory + "/" + page);
 			FileUtils.writeStringToFile(file, result, charset);
-
 		}
-
 	}
 
 	/**
@@ -232,5 +190,4 @@ public class AssemblyMojo extends AbstractMojo {
 	private String getRelativePath(File directory, File file) {
 		return directory.toURI().relativize(file.toURI()).getPath();
 	}
-
 }
