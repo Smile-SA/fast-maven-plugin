@@ -10,7 +10,7 @@
 	<description>Fast ApplicationS Templating is a maven plugin Generate a set of HTML pages with reusable components found in modules folder.</description>
 	<scm>
 		<connection>scm:git:git@github.com:Smile-SA/fast-maven-plugin.git</connection>
-		<url>https://github.com/Smile-SA/fast-maven-plugin.git</url>
+		<url>https://github.com/Smile-SA/fast-maven-plugin</url>
 		<developerConnection>scm:git:git@github.com:Smile-SA/fast-maven-plugin.git</developerConnection>
 	  <tag>HEAD</tag>
   </scm>
