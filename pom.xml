@@ -12,8 +12,7 @@
 		<connection>scm:git:git@github.com:Smile-SA/fast-maven-plugin.git</connection>
 		<url>https://github.com/Smile-SA/fast-maven-plugin</url>
 		<developerConnection>scm:git:git@github.com:Smile-SA/fast-maven-plugin.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+	</scm>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.version>3.0</maven.version>
