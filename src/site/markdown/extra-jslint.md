@@ -1,18 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document>
-	<properties>
-		<title>Extra</title>
-	</properties>
-	<body>
-		<section name="JSLint">
-			<p>
-				Writing good javascript code is good, writing better javascript code is even better =).
-				The idea behind jsLint plugin is to validate your javascript code to fix some usual mistakes.
-			</p>
-			<p>
-				To activate minification with FAST, all you have to do is to add a plugin :
-			</p>
-			<source><![CDATA[
+# Extra
+
+## JSLint
+
+Writing good javascript code is good, writing better javascript code is even better =).
+The idea behind jsLint plugin is to validate your javascript code to fix some usual mistakes.
+
+To activate minification with FAST, all you have to do is to add a plugin :
+
+```xml
 <build>
 	<plugins>
 		<plugin>
@@ -48,16 +43,10 @@
 		</plugin>
 	</plugins>
 </build>
-]]></source>
-			<p>
-				The <em>configuration</em> section can be modified to fit your needs.
-			</p>
-			<p>
-				The <em>includes</em> section contains a list of files you want to validate.
-			</p>
-			<p>
-				For more information, check <a href="http://jslint4java.googlecode.com/svn/docs/2.0.0/maven.html">the jslint4java maven plugin official website</a>.
-			</p>
-		</section>
-	</body>
-</document>
+```
+
+The *configuration* section can be modified to fit your needs.
+
+The *includes* section contains a list of files you want to validate.
+
+For more information, check [the jslint4java maven plugin official website](http://jslint4java.googlecode.com/svn/docs/2.0.0/maven.html).
