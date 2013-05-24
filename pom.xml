@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.fast.maven.plugin</groupId>
 	<artifactId>fast-maven-plugin</artifactId>
-	<version>2.3-SNAPSHOT</version>
+	<version>mvn -DaltDeploymentRepository=releases::default::file:/home/rogon/_projets/GITHUB/maven-repository/releases release:prepare release:perform</version>
 	<packaging>maven-plugin</packaging>
 	<name>fast-maven-plugin</name>
 	<url>http://smile-sa.github.io/fast-maven-plugin</url>
@@ -13,7 +12,8 @@
 		<connection>scm:git:git@github.com:Smile-SA/fast-maven-plugin.git</connection>
 		<url>https://github.com/Smile-SA/fast-maven-plugin.git</url>
 		<developerConnection>scm:git:git@github.com:Smile-SA/fast-maven-plugin.git</developerConnection>
-	</scm>
+	  <tag>fast-maven-plugin-2.3</tag>
+  </scm>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.version>3.0</maven.version>
