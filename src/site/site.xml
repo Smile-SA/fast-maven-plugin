@@ -29,7 +29,7 @@
 			<googlePlusOne />
 			<facebookLike />
 			<gitHub>
-				<projectId>Smile-SA/maven-fast-plugin</projectId>
+				<projectId>Smile-SA/fast-maven-plugin</projectId>
 				<ribbonOrientation>right</ribbonOrientation>
 				<ribbonColor>black</ribbonColor>
 			</gitHub>
