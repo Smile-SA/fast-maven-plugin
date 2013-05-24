@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.http.HttpEntityEnclosingRequest;
+import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
 import org.esigate.Driver;
 import org.esigate.DriverFactory;
@@ -82,5 +83,9 @@ public class StaticDriver extends Driver {
 			throw new HttpErrorPage(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal server error", "Template not found");
 		}
 		return result;
+	}
+
+	public void initHttpRequestParams(HttpRequest request, Map<String, String> parameters) throws HttpErrorPage {
+		// No request will be sent, so no need to init.
 	}
 }
