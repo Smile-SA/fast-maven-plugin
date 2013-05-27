@@ -15,6 +15,7 @@
 			<item name="LESS" href="extra-less.html" />
 			<item name="SASS" href="extra-sass.html" />
 			<item name="Jetty" href="extra-jetty.html" />
+			<item name="Filtering" href="extra-filtering.html" />
 		</menu>
 		<menu ref="reports" />
 	</body>
