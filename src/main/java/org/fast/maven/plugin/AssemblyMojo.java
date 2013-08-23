@@ -135,7 +135,7 @@ public class AssemblyMojo extends AbstractMojo {
 			String fileName = getRelativePath(modulesDirectory, source);
 			String content = FileUtils.readFileToString(source, charset);
 			driver.addResource(fileName, content, charset);
-			getLog().info("Add resource " + fileName + " charset=" + charset);
+			getLog().debug("Add resource " + fileName + " charset=" + charset);
 		}
 	}
 
