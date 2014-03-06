@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.*;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
@@ -84,9 +85,26 @@ public class AssemblyMojo extends AbstractMojo {
 	 */
 	private String charset;
 
+    /**
+     * Thread pool size
+     *
+     * @parameter property="threads" default-value=1
+     */
+    private int threads;
+
 	/* package */String getCharset() {
 		return charset;
 	}
+
+    /**
+     * ExecutorService to parallelize some tasks
+     */
+    private ExecutorService executor;
+
+    /**
+     * tasks
+     */
+    private List<Future> tasks = new ArrayList<Future>();
 
 	/**
 	 * @throws MojoExecutionException
@@ -100,14 +118,26 @@ public class AssemblyMojo extends AbstractMojo {
 		try {
 			checkStructure();
 			init(driver);
+            this.executor = Executors.newFixedThreadPool(this.threads);
 			assemblePages(driver);
 			copyStaticResources();
+
+            this.executor.shutdown();
+            this.executor.awaitTermination(10, TimeUnit.MINUTES);
+            for(Future task : tasks){
+                task.get();
+            }
+
 		} catch (HttpErrorPage e) {
 			throw new MojoExecutionException("Error", e);
 		} catch (IOException e) {
 			throw new MojoExecutionException("Error", e);
-		}
-	}
+		}catch(InterruptedException e){
+            throw new MojoExecutionException("Error", e);
+        } catch (ExecutionException e) {
+            throw new MojoExecutionException("Error", e);
+        }
+    }
 
 	/**
 	 * Check directory structure
@@ -156,29 +186,48 @@ public class AssemblyMojo extends AbstractMojo {
 	 * @throws IOException
 	 * @throws HttpErrorPage
 	 */
-	private void assemblePages(Driver driver) throws IOException, HttpErrorPage {
-		getLog().info("Assemble pages");
-		// Find all html page to render
-		@SuppressWarnings("rawtypes")
-		Collection files = FileUtils.listFiles(pagesDirectory, PAGES_TO_GENERATE_FILTER, FileFilterUtils.trueFileFilter());
-		List<Renderer> renderers = new ArrayList<Renderer>();
-		renderers.add(new AggregateRenderer());
-		renderers.add(new EsiRenderer());
-		for (Object ofilename : files) {
-			File filePage = (File) ofilename;
-			String page = getRelativePath(pagesDirectory, filePage);
-			String content = FileUtils.readFileToString(filePage, charset);
-			BasicHttpEntityEnclosingRequest request = new BasicHttpEntityEnclosingRequest(new BasicRequestLine("GET", page, new ProtocolVersion("HTTP", 1, 1)));
-			for (Renderer renderer : renderers) {
-				StringWriter stringWriter = new StringWriter();
-				renderer.render(request, content, stringWriter);
-				content = stringWriter.toString();
-			}
-			String result = content.replaceAll("<!--#\\$", "<!--\\$");
-			File file = new File(this.outputDirectory + "/" + page);
-			FileUtils.writeStringToFile(file, result, charset);
-		}
-	}
+    private void assemblePages(Driver driver) throws IOException, HttpErrorPage {
+        getLog().info("Assemble pages");
+        // Find all html page to render
+        @SuppressWarnings("rawtypes")
+        Collection files = FileUtils.listFiles(pagesDirectory, PAGES_TO_GENERATE_FILTER, FileFilterUtils.trueFileFilter());
+
+
+        final File output = this.outputDirectory;
+        for (final Object ofilename : files) {
+            Future task = this.executor.submit(new Runnable() {
+                @Override
+                public void run() {
+                    final List<Renderer> renderers = new ArrayList<Renderer>();
+                    renderers.add(new AggregateRenderer());
+                    renderers.add(new EsiRenderer());
+
+
+                    File filePage = (File) ofilename;
+                    String page = getRelativePath(pagesDirectory, filePage);
+                    try {
+                        String content = FileUtils.readFileToString(filePage, charset);
+                        BasicHttpEntityEnclosingRequest request = new BasicHttpEntityEnclosingRequest(new BasicRequestLine("GET", page, new ProtocolVersion("HTTP", 1, 1)));
+                        for (Renderer renderer : renderers) {
+                            StringWriter stringWriter = new StringWriter();
+                            renderer.render(request, content, stringWriter);
+                            content = stringWriter.toString();
+                        }
+                        String result = content.replaceAll("<!--#\\$", "<!--\\$");
+                        File file = new File(output + "/" + page);
+                        FileUtils.writeStringToFile(file, result, charset);
+                    } catch (IOException ioe) {
+                        throw new RuntimeException(ioe);
+                    } catch (HttpErrorPage ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                }
+            });
+            tasks.add(task);
+        }
+
+    }
 
 	/**
 	 * Return relative path

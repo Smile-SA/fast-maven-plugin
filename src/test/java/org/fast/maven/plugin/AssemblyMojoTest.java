@@ -49,6 +49,7 @@ public class AssemblyMojoTest extends AbstractMojoTestCase {
 				"pages"));
 		setVariableValueToObject(vm, "modulesDirectory", new File(testbasedir,
 				"modules"));
+        setVariableValueToObject(vm, "threads", 10);
 
 		//If not set in plugin configuration
 		if (vm.getCharset() == null) {
@@ -151,7 +152,7 @@ public class AssemblyMojoTest extends AbstractMojoTestCase {
 			fail("Should throw an exception when a template is not found");
 		} catch (MojoExecutionException e) {
 			assertTrue("Should have thrown an HttpErrorPage",
-					e.getCause() instanceof HttpErrorPage);
+					e.getCause().getCause().getCause() instanceof HttpErrorPage);
 		}
 	}
 
