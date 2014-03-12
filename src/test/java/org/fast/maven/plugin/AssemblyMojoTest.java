@@ -121,6 +121,26 @@ public class AssemblyMojoTest extends AbstractMojoTestCase {
 
 	}
 
+    public void testIt1Esi() throws Exception {
+
+        String dir = "target/test-classes/it1-esi";
+        String outputDir = "target/it1-esi/generated-html";
+        File fileOutputDir = new File(getBasedir() + "/" + outputDir);
+        FileUtils.deleteDirectory(fileOutputDir);
+
+        AssemblyMojo mojo = (AssemblyMojo) newAssemblyMojo(dir, outputDir,
+           DEFAULT_CHARSET);
+        mojo.execute();
+        assertSameContent(dir, outputDir, "page1.html");
+
+        Collection<?> staticFile = FileUtils.listFiles(fileOutputDir,
+           new SuffixFileFilter(".css"), FileFilterUtils.trueFileFilter());
+        assertFalse("Ressources files were not copied", staticFile.isEmpty());
+        assertEquals(2, staticFile.size());
+
+    }
+
+
 	public void testIt7() throws Exception {
 
 		String dir = "target/test-classes/it7";
