@@ -217,9 +217,9 @@ public class AssemblyMojo extends AbstractMojo {
                         File file = new File(output + "/" + page);
                         FileUtils.writeStringToFile(file, result, charset);
                     } catch (IOException ioe) {
-                        throw new RuntimeException(ioe);
+                        throw new TaskRuntimeException(ioe);
                     } catch (HttpErrorPage ex) {
-                        throw new RuntimeException(ex);
+                        throw new TaskRuntimeException(ex);
                     }
 
                 }

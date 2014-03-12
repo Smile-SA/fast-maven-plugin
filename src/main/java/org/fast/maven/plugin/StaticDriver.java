@@ -78,9 +78,10 @@ public class StaticDriver extends Driver {
 
 	@Override
 	protected String getResourceAsString(String relUrl, HttpEntityEnclosingRequest httpRequest) throws HttpErrorPage {
-		String result = resources.get(relUrl);
+		String result = this.resources.get(relUrl);
 		if (result == null) {
-			throw new HttpErrorPage(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal server error", "Template not found");
+			throw new HttpErrorPage(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal server error" +  "Resource [" + relUrl + "] not found ",
+               "Resource [" + relUrl + "] not found ");
 		}
 		return result;
 	}
